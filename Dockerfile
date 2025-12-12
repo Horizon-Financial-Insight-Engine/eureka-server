@@ -1,8 +1,15 @@
-# Build Spring Boot Eureka Server (Runtime stage only)
-FROM eclipse-temurin:17-jdk
+FROM openjdk:17-jre-slim
+WORKDIR /opt/eureka
 
-ARG JAR_FILE=target/eureka-server-0.0.1-SNAPSHOT.jar
-WORKDIR /app
-COPY ${JAR_FILE} app.jar
+ENV SERVER_PORT=8761
+ENV SPRING_PROFILES_ACTIVE=prod
+
+RUN addgroup --system eureka \
+    && adduser --system --ingroup eureka eureka
+USER eureka
+
+COPY --from=build /app/target/*.jar eureka-server.jar
+
 EXPOSE 8761
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+CMD ["java", "-jar", "eureka-server.jar"]
