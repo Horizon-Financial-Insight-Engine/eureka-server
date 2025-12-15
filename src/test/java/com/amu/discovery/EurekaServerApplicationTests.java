@@ -1,4 +1,4 @@
-package com.amu.eurekaserver;
+package com.amu.discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
